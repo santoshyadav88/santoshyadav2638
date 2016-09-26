@@ -1,0 +1,14 @@
+public static voidFibonacci_Iterative(int len)
+        {
+            int a = 0, b = 1, temp = 0;
+            Console.Write("{0} {1}", a,b);
+ 
+            for (int i = 2; i < len; i++)
+            {
+                temp= a + b;
+                Console.Write(" {0}", c);
+                a= b;
+                b= temp;
+            }
+       }
+       o/p=0,1,1,2,3,5,8,13..len
