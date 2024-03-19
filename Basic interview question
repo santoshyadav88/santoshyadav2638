@@ -1,100 +1,290 @@
-1.describe any one oops concept which you know very well.
+import { CalculatedIncrements, PolicyCoverageType, PolicyType, RateType, RoundingType } from "@fluentsms/types-fluent";
+import { DynamoPolicyRate } from "../../../../../src/models/policyPricing/policyRate.dynamo.model";
+import { newPolicyInfo, newRateType } from "../../helpers/policy.helper";
+import { UnderwriterIds } from "../../../../../src/constants/underwriter.constants";
+import {
+  newBracketPricing,
+  newBracketPricingWithPercentofPremium
+} from "../../../../../src/fluentPricing/fluentPricing.generator";
+import { BasicRefinance, lenderBasic } from "../rates/lenderRates";
 
-2.what is design pattern describe.
-
-3.what is private constructor.
-
-4.static onstructor what is benefit to using this.
-
-5.write a program to count number of digit occurance inside big number
-eg.001222334567
-how many times 0,1,2,3 find count (use dictinoany)
-
-6.what is delegate and event expalian in details.
-
-7.what is using block whay its neccessary 
-
-8.dispose vs using
-
-9.when go for interface when go for abstract class
-
-10.what is application class.
-
-11.call parent form from chaild form.
-
-12.threading
-
-13.linked list,stack,queue
-
-14.how to cast object how many types we can typecast.
-
-15.how to concate string(using string builder)
-
-16.what is package
-
-17.what is inline view
-
-18.what is stored procedure
-
-19.write palindrom program
-
-20.what is agile.
-
-21 what is sdlc.
-
-
-22.what is with keyword sql
-
-23.mvvm
-24.how may types of testing
-
-25.uml/use case diagram
-
-26.generic vs collections
-
-27.array list vs list
-
-28.draw uml diagram with example.
-29.how to create obserbable collection
-30.difference between count(*) vs count(column)
-31.difference betwen union and unionall
-32.trigger types of trigger
-33.cursor type of cursor syntax
-34.stored procedure and syntax and benifit.
-35.Async and Await
-
-RobertBosh
----------
-28.what is filestream class mode of file stream class
-29.how to append read write a file into server
-30.what is backgroundworker thread.
-31.what is difference between sql transaction and .net transaction
-32.what is localization how to achive in xaml wpf
-33.what is convert and convertback in wpf
-34.cursor and number of types in cursor
-35.triggers types of triggers.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+let mdLoanPolicies: DynamoPolicyRate[] = [];
+export const fnticMarylandLoanPolicies = (): DynamoPolicyRate[] => {
+  mdLoanPolicies = mdLoanPolicies.concat(
+    newPolicyInfo({
+      policyId: "clnaduneb001xdsnlb3335ljp",
+      policyName: "ALTA Loan Policy w-MD Mod 2021",
+      policyType: PolicyType.LENDER,
+      policyCoverageType: PolicyCoverageType.BASIC,
+      policyRates: [
+        newRateType({
+          rateId: "clnaduneb001ydsnlehfvv6u4",
+          rateType: RateType.BASIC,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            minimumCharge: 300.0,
+            rates: lenderBasic,
+            simultaneousFee: 200,
+            roundIncrements: RoundingType.UP
+          }),
+          effectiveDate: "03/11/2020"
+        }),
+        newRateType({
+          rateId: "clnaduneb001zdsnl8b0ep320",
+          rateType: RateType.REFINANCE,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            rates: BasicRefinance
+          }),
+          effectiveDate: "03/11/2020"
+        })
+      ],
+      state: "MD",
+      underwriterId: UnderwriterIds.FIDELITY_NATIONAL
+    }),
+    newPolicyInfo({
+      policyId: "clnaduneb0020dsnl27bw306u",
+      policyName: "ALTA Short Form Loan Policy w-MD Mod 2021",
+      policyType: PolicyType.LENDER,
+      policyCoverageType: PolicyCoverageType.BASIC,
+      policyRates: [
+        newRateType({
+          rateId: "clnaduneb0021dsnltcfia6ls",
+          rateType: RateType.BASIC,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            minimumCharge: 300.0,
+            simultaneousFee: 200,
+            rates: lenderBasic,
+            roundIncrements: RoundingType.UP
+          }),
+          effectiveDate: "03/11/2020"
+        }),
+        newRateType({
+          rateId: "clnaduneb0022dsnl1o78a4zh",
+          rateType: RateType.REFINANCE,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            rates: BasicRefinance
+          }),
+          effectiveDate: "03/11/2020"
+        })
+      ],
+      state: "MD",
+      underwriterId: UnderwriterIds.FIDELITY_NATIONAL
+    }),
+    newPolicyInfo({
+      policyId: "clnaduneb0023dsnlalj98rvc",
+      policyName: "ALTA Expanded Loan Policy Current Assessments w-MD Mod",
+      policyType: PolicyType.LENDER,
+      policyCoverageType: PolicyCoverageType.ENHANCED,
+      policyRates: [
+        newRateType({
+          rateId: "clnadunec0024dsnlwpkjts5l",
+          rateType: RateType.BASIC,
+          pricing: newBracketPricingWithPercentofPremium({
+            percent: 120,
+            simultaneousFee: 200,
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            //Based on 120% of the minimumCharge 300, it will be 360 which is the minimum charge for enhanced.
+            rates: lenderBasic
+          }),
+          effectiveDate: "03/11/2020"
+        }),
+        newRateType({
+          rateId: "clnadunec0025dsnlszwsatku",
+          rateType: RateType.REFINANCE,
+          pricing: newBracketPricingWithPercentofPremium({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            //Based on 120% of the minimum charge 300 it will be 360 which is the minimum charge for enhanced
+            rates: BasicRefinance,
+            percent: 120
+          }),
+          effectiveDate: "03/11/2020"
+        })
+      ],
+      state: "MD",
+      underwriterId: UnderwriterIds.FIDELITY_NATIONAL
+    }),
+    newPolicyInfo({
+      policyId: "clnadunec0026dsnlxnnpi4je",
+      policyName: "ALTA Loan Policy 2006",
+      policyType: PolicyType.LENDER,
+      policyCoverageType: PolicyCoverageType.BASIC,
+      policyRates: [
+        newRateType({
+          rateId: "clnadunec0027dsnla012pgl5",
+          rateType: RateType.BASIC,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            minimumCharge: 300.0,
+            simultaneousFee: 200,
+            rates: lenderBasic,
+            roundIncrements: RoundingType.UP
+          }),
+          effectiveDate: "03/11/2020"
+        }),
+        newRateType({
+          rateId: "clnadunec0028dsnlrknprqt6",
+          rateType: RateType.REFINANCE,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            rates: BasicRefinance
+          }),
+          effectiveDate: "03/11/2020"
+        })
+      ],
+      state: "MD",
+      underwriterId: UnderwriterIds.FIDELITY_NATIONAL
+    }),
+    newPolicyInfo({
+      policyId: "clnadunec0029dsnlzgr38ujd",
+      policyName: "ALTA Short Form Residential Loan Policy 2012",
+      policyType: PolicyType.LENDER,
+      policyCoverageType: PolicyCoverageType.BASIC,
+      policyRates: [
+        newRateType({
+          rateId: "clnadunec002adsnl95udoglt",
+          rateType: RateType.BASIC,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            minimumCharge: 300.0,
+            simultaneousFee: 200,
+            rates: lenderBasic,
+            roundIncrements: RoundingType.UP
+          }),
+          effectiveDate: "03/11/2020"
+        }),
+        newRateType({
+          rateId: "clnadunec002bdsnltgc0ehwx",
+          rateType: RateType.REFINANCE,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            rates: BasicRefinance
+          }),
+          effectiveDate: "03/11/2020"
+        })
+      ],
+      state: "MD",
+      underwriterId: UnderwriterIds.FIDELITY_NATIONAL
+    }),
+    newPolicyInfo({
+      policyId: "clnadunec002cdsnlmwzolzab",
+      policyName: "ALTA Short Form Residential Loan Policy-Current Violations 2015",
+      policyType: PolicyType.LENDER,
+      policyCoverageType: PolicyCoverageType.BASIC,
+      policyRates: [
+        newRateType({
+          rateId: "clnadunec002ddsnlwt4jgrhq",
+          rateType: RateType.BASIC,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            minimumCharge: 300.0,
+            simultaneousFee: 200,
+            rates: lenderBasic,
+            roundIncrements: RoundingType.UP
+          }),
+          effectiveDate: "03/11/2020"
+        }),
+        newRateType({
+          rateId: "clnadunec002edsnl6bwf0cm0",
+          rateType: RateType.REFINANCE,
+          pricing: newBracketPricing({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            rates: BasicRefinance
+          }),
+          effectiveDate: "03/11/2020"
+        })
+      ],
+      state: "MD",
+      underwriterId: UnderwriterIds.FIDELITY_NATIONAL
+    }),
+    newPolicyInfo({
+      policyId: "clnadunec002fdsnlsv3lfhyf",
+      policyName: "ALTA Expanded Coverage Residential Loan Policy-Current Assessments 2015",
+      policyType: PolicyType.LENDER,
+      policyCoverageType: PolicyCoverageType.ENHANCED,
+      policyRates: [
+        newRateType({
+          rateId: "clnadunec002gdsnlvbmby59g",
+          rateType: RateType.BASIC,
+          pricing: newBracketPricingWithPercentofPremium({
+            percent: 120,
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            simultaneousFee: 200,
+            rates: lenderBasic
+          }),
+          effectiveDate: "03/11/2020"
+        }),
+        newRateType({
+          rateId: "clnadunec002hdsnlgo0i85a3",
+          rateType: RateType.REFINANCE,
+          pricing: newBracketPricingWithPercentofPremium({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            //Based on 120% of the minimum charge 300 it will be 360 which is the minimum charge for enhanced
+            rates: BasicRefinance,
+            percent: 120
+          }),
+          effectiveDate: "03/11/2020"
+        })
+      ],
+      state: "MD",
+      underwriterId: UnderwriterIds.FIDELITY_NATIONAL
+    }),
+    newPolicyInfo({
+      policyId: "clnadunec002idsnl2f1die4f",
+      policyName: "ALTA Short Form Expanded Coverage Residential Loan Policy-Current Assessments 2015",
+      policyType: PolicyType.LENDER,
+      policyCoverageType: PolicyCoverageType.ENHANCED,
+      policyRates: [
+        newRateType({
+          rateId: "clnadunec002jdsnlkrlqe26m",
+          rateType: RateType.BASIC,
+          pricing: newBracketPricingWithPercentofPremium({
+            percent: 120,
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            simultaneousFee: 200,
+            rates: lenderBasic
+          }),
+          effectiveDate: "03/11/2020"
+        }),
+        newRateType({
+          rateId: "clnadunec002kdsnlvi25c8l5",
+          rateType: RateType.REFINANCE,
+          pricing: newBracketPricingWithPercentofPremium({
+            calculatedIncrements: CalculatedIncrements.THOUSANDS,
+            roundIncrements: RoundingType.UP,
+            minimumCharge: 300,
+            //Based on 120% of the minimum charge 300 it will be 360 which is the minimum charge for enhanced
+            rates: BasicRefinance,
+            percent: 120
+          }),
+          effectiveDate: "03/11/2020"
+        })
+      ],
+      state: "MD",
+      underwriterId: UnderwriterIds.FIDELITY_NATIONAL
+    })
+  );
+  return mdLoanPolicies;
+};
